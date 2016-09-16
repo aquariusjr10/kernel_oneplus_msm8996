@@ -23,13 +23,15 @@
 #include <linux/err.h>
 #include <linux/string.h>
 #include <linux/display_state.h>
-
+#include "mdss_livedisplay.h"
 #include "mdss_dsi.h"
 #include "mdss_debug.h"
 #ifdef TARGET_HW_MDSS_HDMI
 #include "mdss_dba_utils.h"
 #endif
-#include "mdss_livedisplay.h"
+#ifdef CONFIG_POWERSUSPEND
+#include <linux/powersuspend.h>
+#endif
 
 #define DT_CMD_HDR 6
 #define MIN_REFRESH_RATE 48
@@ -1193,6 +1195,12 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 		return -EINVAL;
 	}
 
+	display_on = true;
+
+	#ifdef CONFIG_POWERSUSPEND
+		set_power_suspend_state_panel_hook(POWER_SUSPEND_INACTIVE);
+	#endif
+
 	pinfo = &pdata->panel_info;
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
@@ -1353,6 +1361,10 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 	mdss_dsi_panel_off_hdmi(ctrl, pinfo);
 
 	display_on = false;
+
+	#ifdef CONFIG_POWERSUSPEND
+		set_power_suspend_state_panel_hook(POWER_SUSPEND_ACTIVE);
+	#endif
 
 end:
 	/* clear idle state */
