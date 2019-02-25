@@ -132,3 +132,5 @@ obj-$(CONFIG_DRM_MSM) += display-manager/display_manager.o
 
 obj-$(CONFIG_DRM_SDE_WB) += sde/sde_wb.o \
 	sde/sde_encoder_phys_wb.o
+
+msm_drm-$(CONFIG_KLAPSE) += sde/klapse.o

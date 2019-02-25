@@ -92,4 +92,10 @@ config DRM_SDE_HDMI
 	depends on DRM_MSM
 	default y
 	help
-	  Choose this option if HDMI connector support is needed in SDE driver.
+
+config KLAPSE
+    bool CONFIG_KLAPSE
+    depends on DRM_MSM
+    default n
+    help
+        A simple rgb dynamic lapsing module similar to LineageOS' livedisplay

@@ -21,6 +21,10 @@
 #include "dsi_panel.h"
 #include "dsi_ctrl_hw.h"
 
+#ifdef CONFIG_KLAPSE
+#include "../sde/klapse.h"
+#endif
+
 #define DSI_PANEL_DEFAULT_LABEL  "Default dsi panel"
 
 static int dsi_panel_vreg_get(struct dsi_panel *panel)
@@ -317,6 +321,13 @@ static int dsi_panel_pinctrl_init(struct dsi_panel *panel)
 	}
 
 error:
+	return rc;
+}
+
+#ifdef CONFIG_KLAPSE
+	set_rgb_slider(bl_lvl);
+#endif
+
 	return rc;
 }
 
