@@ -262,10 +262,9 @@ static int sdev_runtime_suspend(struct device *dev)
 		err = blk_pre_runtime_suspend(sdev->request_queue);
 		if (err)
 			return err;
-
 		err = pm->runtime_suspend(dev);
-	blk_post_runtime_suspend(sdev->request_queue, err);
-
+		blk_post_runtime_suspend(sdev->request_queue, err);
+	}
 	return err;
 }
 
@@ -294,8 +293,8 @@ static int sdev_runtime_resume(struct device *dev)
 	if (pm && pm->runtime_resume) {
 		blk_pre_runtime_resume(sdev->request_queue);
 		err = pm->runtime_resume(dev);
-	blk_post_runtime_resume(sdev->request_queue, err);
-
+		blk_post_runtime_resume(sdev->request_queue, err);
+	}
 	return err;
 }
 
@@ -393,3 +392,4 @@ const struct dev_pm_ops scsi_bus_pm_ops = {
 	.runtime_resume =	scsi_runtime_resume,
 	.runtime_idle =		scsi_runtime_idle,
 };
+
