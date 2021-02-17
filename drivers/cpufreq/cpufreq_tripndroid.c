@@ -626,3 +626,4 @@ module_exit(cpufreq_tripndroid_exit);
 MODULE_AUTHOR("TripNDroid Mobile Engineering");
 MODULE_DESCRIPTION("'cpufreq_tripndroid' - tripndroid cpufreq governor");
 MODULE_LICENSE("GPL");
+
