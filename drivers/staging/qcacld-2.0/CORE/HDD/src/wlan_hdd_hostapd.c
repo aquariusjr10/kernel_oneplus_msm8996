@@ -5629,6 +5629,12 @@ static __iw_softap_getchannel(struct net_device *dev,
 
     ENTER();
 
+    if (!capable(CAP_NET_ADMIN)) {
+        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                 FL("permission check failed"));
+        return -EPERM;
+    }
+
     hdd_ctx = WLAN_HDD_GET_CTX(pHostapdAdapter);
     ret = wlan_hdd_validate_context(hdd_ctx);
     if (0 != ret)
@@ -6838,6 +6844,12 @@ static int __iw_get_ap_freq(struct net_device *dev,
    int ret;
 
    ENTER();
+
+   if (!capable(CAP_NET_ADMIN)) {
+       VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                FL("permission check failed"));
+       return -EPERM;
+   }
 
    hdd_ctx = WLAN_HDD_GET_CTX(pHostapdAdapter);
    ret = wlan_hdd_validate_context(hdd_ctx);
